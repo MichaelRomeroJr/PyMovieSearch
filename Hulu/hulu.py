@@ -57,6 +57,7 @@ def scan_results(driver, movie_title):
 			#print(f"Movie: {elem.text}")
 			if movie_title in elem.text:
 			 	#print(f"Found: {elem.text}")
+			 	print(f"Found '{movie_title}' as '{elem.text}' ")
 			 	movie_url = element.get_attribute('href')
 			 	movie_found = True
 			 	return movie_found, movie_url
