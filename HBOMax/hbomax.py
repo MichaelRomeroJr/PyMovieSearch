@@ -50,7 +50,7 @@ def scan_results(driver, movie_title):
 		link = web_element.get_attribute('href')
 		if current_title is not None:
 			if movie_title in current_title:
-				print(f"Found {movie_title} as {current_title}")
+				print(f"Found '{movie_title}' as '{current_title}' ")
 				movie_found = True
 
 	return movie_found
