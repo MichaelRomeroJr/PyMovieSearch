@@ -10,6 +10,8 @@ from PrimeVideo import primevideo
 from HBOMax import hbomax  
 from DisneyPlus import disneyplus
 
+import argparse
+
 def configure_chrome_driver():  
 	options = webdriver.ChromeOptions()  
 	options.add_argument(f"user-data-dir={pathlib.Path(__file__).parent.absolute().joinpath('chrome-profile')}")  	
@@ -18,33 +20,56 @@ def configure_chrome_driver():
 	#the_driver = webdriver.Chrome('/mnt/c/Python/chromedriver.exe') # hardcode path
 	return the_driver
 
+def arg_parse():
+	"""
+		Parse arguements to the detect module
+	"""
+	
+	parser = argparse.ArgumentParser(description='Python app to query streaming platforms for movie title. ')
+	parser.add_argument('--movie', '--movie-list', help="list of movies to query different streaming platforms.", nargs='+', default=[])
+	#parser.add_argument("--movie", help = "Enter movie title to query different platforms.", default = "")
+
+	return parser.parse_args()
+	
 
 if __name__ == '__main__':
-	driver = configure_chrome_driver()
-	movie = "Without Remorse" # Prime
-	#movie = "Hellboy II" # Hulu
-	#movie = "Mortal Kombat" # HBOMax
-	#movie = "Coco" # Disney+
 
-	print(f"Looking for '{movie}'")
-	print(f"Querying Disney+: ")
+	args = arg_parse()
+	movie = ' '.join([str(elem) for elem in args.movie])
+
+	driver = configure_chrome_driver()
+
+
+	print(f"Looking for '{movie}' ")
+
+	print(f"Querying Disney+: ",  end = " ")
 	if disneyplus.search(driver, movie):
 		print(f"'{movie}' is on Disney+")
+	else:
+		print(f"not available. ")
 
-	print(f"Querying HBO Max: ")
+	print(f"Querying HBO Max: ", end = " ")
 	if hbomax.search(driver, movie):
 		print(f"'{movie}' is on HBO Max")
+	else:
+		print(f"not available. ")
 
-	print(f"Querying Netflix: ")
+	print(f"Querying Netflix: ",  end = " ")
 	if netflix.search(driver, movie):
 		print(f"'{movie}' is on Netflix")
+	else:
+		print(f"not available. ")
 
-	print(f"Querying Hulu: ")
+	print(f"Querying Hulu: ", end = " ")
 	if hulu.search(driver, movie):
 		print(f"'{movie}' is on Hulu")
+	else:
+		print(f"not available. ")
 
-	print(f"Querying PrimeVideo: ")
+	print(f"Querying PrimeVideo: ", end = " ")
 	if primevideo.search(driver, movie):
 		print(f"'{movie}' is on PrimeVideo")
+	else:
+		print(f"not available. ")
 
-	driver.close()
+	#driver.close()
