@@ -41,7 +41,7 @@ def scan_results(driver, movie_title):
 		if movie_title in title: 
 			# is "Without Remose" in "Tom Clancy's Without Remorse"
 			movie_found = True
-			print(f"Found {movie_title} as {title}")
+			print(f"Found '{movie_title}' as '{title}' ")
 
 	return movie_found
 
