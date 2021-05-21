@@ -3,22 +3,16 @@ import config
 from time import sleep
 from selenium.webdriver.common.action_chains import ActionChains
 
-def account_login(driver):
-	
-	login_elems = driver.find_elements_by_class_name("nav-line-1-container")
-	
-	for elem in login_elems:
-		if "Hello, Sign in" in elem.text:
-			#print(elem.text)
-			elem.click()
-			input("First time Amazon Prime log in")
+def login(driver):
 
-		else: 
-			# already logged in since Sign In prompt is missing
-			return
+	driver.get("https://www.amazon.com/gp/video/storefront")
+	input("Manually sign into Netflix press Enter to continue: ")
+	
 	return
 
+
 def movie_search(driver, movie_title):
+
 	driver.find_element_by_class_name("nav-search-field ").click()
 	sleep(2)
 
@@ -30,6 +24,7 @@ def movie_search(driver, movie_title):
 	driver.find_element_by_id("nav-search-submit-button").click()
 
 	return
+
 
 def scan_results(driver, movie_title):
 
@@ -44,6 +39,7 @@ def scan_results(driver, movie_title):
 			print(f"Found '{movie_title}' as '{title}' ")
 
 	return movie_found
+
 
 def check_if_free(driver, available):
 	"""
@@ -66,13 +62,12 @@ def check_if_free(driver, available):
 def search(driver, movie_title):
 	driver.get("https://www.amazon.com/gp/video/storefront")
 
-	account_login(driver)
 	movie_search(driver, movie_title=movie_title)
 
 	availability = scan_results(driver, movie_title=movie_title)		
 	is_on_prime = check_if_free(driver, available=availability)
 
 	if availability and (not is_on_prime):
-		print(f"Primevideo: available as Rental / Purchase")
+		print(f"primevideo: available as Rental / Purchase")
 
 	return is_on_prime
