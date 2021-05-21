@@ -3,15 +3,18 @@ import config
 from time import sleep
 from selenium.webdriver.common.action_chains import ActionChains
 
-def account_login(driver):
-	sign_in_button = driver.find_elements_by_class_name("default")
+def login(driver):
+	
+	driver.get("https://play.hbomax.com/")
+	input("Manually sign into Netflix press Enter to continue: ")
 
-	for element in sign_in_button:
-		#print(element.text)
-		if "Sign In" in element.text:
-			input("First time HBO Max log in: ")
+	return
 
-	# Select profile
+def select_profile(driver):
+	"""
+		Set HBO Max profile name in the config file as HBOMAX_ACC
+	"""
+
 	defualt_elements = driver.find_elements_by_class_name("default")
 	for web_element in defualt_elements:
 		nested_elements = web_element.find_elements_by_class_name("class1")
@@ -24,12 +27,12 @@ def account_login(driver):
 					i.click()
 					sleep(2)
 					return
-
 	return
 
 def movie_search(driver, movie_title):
+
 	driver.find_element_by_css_selector("[aria-label=Search]").click()
-	sleep(2)
+	sleep(1)
 
 	# Send keys w/o clicking on element 
 	actions = ActionChains(driver)
@@ -59,7 +62,7 @@ def search(driver, movie_title):
 	driver.get("https://play.hbomax.com/")
 	sleep(5)
 
-	account_login(driver)
+	select_profile(driver)
 	movie_search(driver, movie_title=movie_title)
 	
 	is_on_hbomax = scan_results(driver, movie_title=movie_title)
