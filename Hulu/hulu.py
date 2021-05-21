@@ -3,32 +3,12 @@ import config
 from time import sleep
 from selenium.webdriver.common.action_chains import ActionChains
 
-def account_login(driver):
-	
-	# Landing on log in page, if you are already signed in it re-directs to /browse page
-	if "welcome" in driver.current_url: # we have to log in
-		# Click "Sign In" button
-		sign_in_button = driver.find_element_by_xpath("/html/body/div[1]/div/div/div/nav/header/div[1]/div[2]/div[2]/button[2]").click()
-		sleep(3)
+def login(driver):
 
-		input("First time Hulu log in")
-
-		# # Send email/pass
-		# email_field = driver.find_element_by_id("email_id")
-		# email_field.send_keys(username)
-
-		# password_field = driver.find_element_by_id("password_id")
-		# password_field.send_keys(password)
-		# sleep(1)
-
-		# input("Start Captcha process. Press Enter in terminal when completed.")
-		# #driver.find_element_by_class_name("recaptcha-checkbox-border").click()
-
-		# # Click to log in
-		# sign_in_button = driver.find_element_by_xpath("/html/body/div[1]/div/div/div/nav/div/div[2]/div[2]/div/div/div[1]/div/div/button")
-		# sign_in_button.click()
-
+	driver.get("https://www.hulu.com/hub/home")
+	input("Manually sign into Netflix press Enter to continue: ")
 	return
+
 
 def movie_search(driver, movie_title):
 	driver.get("https://www.hulu.com/search")
@@ -37,13 +17,13 @@ def movie_search(driver, movie_title):
 	sleep(2)
 
 	# # Send keys w/o clicking on element 
-	# # Element to click is moving search box 
 	actions = ActionChains(driver)
 	actions.send_keys(movie_title)
 	actions.perform()
 
 	sleep(2) 
 	return
+
 
 def scan_results(driver, movie_title):
 
@@ -85,11 +65,10 @@ def check_if_free(driver, available, movie_hulu_url):
 	return is_free
 
 def search(driver, movie_title):
+
 	driver.get("https://www.hulu.com/hub/home")
 
-	account_login(driver)
-	movie_search(driver, movie_title=movie_title)
-	
+	movie_search(driver, movie_title=movie_title)	
 	availability, movie_url = scan_results(driver, movie_title=movie_title)
 
 	is_on_hulu= check_if_free(driver, available=availability, movie_hulu_url=movie_url)
