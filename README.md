@@ -8,11 +8,14 @@
 - download chromedriver.exe to same directory
  
 ## First Run
+Use `--setup True` for the first run. 
 Platforms like PrimeVideo, Hulu, and HBO Max aren't very kind to bots so `ChromeOptions` loads cookies from previous useage. First run opens a chrome browser, goes to streaming platform and asks the user to log in. (Hulu and Amazon require captcha's/SMS). <br>
 Once the browser is recognized the first time, it stays logged in the next time.
 
 ## Regular Use 
-`python search.py --movie Movie Title`
+`python search.py --movie Movie Title One, Movie Title Two --exclude HBOMax Netflix` <br>
+This will search for the two movies (Movie Title One and Movie Title Two) on all platforms except HBOMax and Netflix.
+Exclude is empty by defualt so it checks all platforms by defualt.
 
 ## Future Updates
 - Improve search results: Mainly uses `if substring in string` where `substring` is user's movie_title and `string` is movie title as listed on streaming platform. (I.e. movie_title="Now You See Me" is found as "Pretty Little Liars, S4 E12: Now You See Me, Now You Don’t." which is not ideal)
